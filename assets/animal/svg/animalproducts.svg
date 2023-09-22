@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.18 98.38">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 49.69px;
+      }
+
+      .cls-2 {
+        fill: #4e4a51;
+        opacity: .83;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-3, .cls-4 {
+        font-family: MaiandraGD-Regular, 'Maiandra GD';
+        font-size: 33px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <text class="cls-2" transform="translate(0 41.59) scale(1.12 1)"><tspan class="cls-1" x="0" y="0" xml:space="preserve">  </tspan><tspan class="cls-3" x="21.07" y="0">ANIMAL</tspan><tspan class="cls-4"><tspan x="0" y="49">PRODUCTS</tspan></tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 273.75 110.62">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-2 {
+        letter-spacing: -.08em;
+      }
+
+      .cls-3 {
+        font-size: 26.43px;
+        opacity: .83;
+      }
+
+      .cls-3, .cls-4 {
+        fill: #4e4a51;
+        font-family: MaiandraGD-Regular, 'Maiandra GD';
+      }
+
+      .cls-4 {
+        font-size: 41px;
+        opacity: .93;
+      }
+
+      .cls-5 {
+        letter-spacing: .02em;
+      }
+
+      .cls-6 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <text class="cls-4" transform="translate(44.38 34.95) scale(1.12 1)"><tspan class="cls-6"><tspan x="0" y="0">BISCUITS</tspan></tspan><tspan class="cls-1" x="-39.55" y="66">CHOCO</tspan><tspan class="cls-5" x="114.99" y="66">L</tspan><tspan class="cls-2" x="134.91" y="66">A</tspan><tspan class="cls-6" x="159.11" y="66">TE</tspan></text>
+    <text class="cls-3" transform="translate(125.24 63.15) scale(1.12 1)"><tspan x="0" y="0">&amp;</tspan></text>
+  </g>
+</svg>
