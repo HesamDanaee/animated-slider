@@ -8,6 +8,7 @@ const layerOnTOp = document.querySelector(".layerOnTop");
 const container = document.querySelector(".container");
 const dots = document.querySelectorAll(".dot");
 const dotsWrapper = document.querySelectorAll(".dot__wrapper");
+const slides = document.querySelectorAll(".slide");
 
 const imageComponentWrapper = document.querySelectorAll(".slide__imgwrapper");
 export {
@@ -20,4 +21,5 @@ export {
   container,
   dots,
   dotsWrapper,
+  slides,
 };

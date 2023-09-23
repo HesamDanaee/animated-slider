@@ -18,8 +18,8 @@
 
 .container {
   width: 100vw;
+  min-width: 400px;
   height: 100vh;
-  border: 1px solid white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,6 +42,9 @@
 
 .slider {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 1;
 }
 
@@ -68,13 +71,29 @@
 }
 
 .circle {
-  width: 100%;
-  height: 100%;
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
   position: absolute;
   left: 50%;
   top: 50%;
   translate: -50% -50%;
+}
+
+#circle-left,
+#circle-right {
+  width: 80px;
+  height: 80px;
+}
+
+#circle-left {
+  left: 15%;
+  top: 25%;
+}
+
+#circle-right {
+  right: 0;
+  top: 10%;
 }
 
 .text {
@@ -255,60 +274,24 @@
   top: 0;
 }
 
-/* #mySVg path {
-} */
-
-/* .slide__1,
-.slide__2,
-.slide__3,
-.slide__4 {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: white;
-  position: absolute;
-  bottom: 0;
-  z-index: 99;
-  transition: all 0.5s ease-in-out;
-}
-
-.slide__1 {
-  left: 50%;
-  translate: -50% 0;
-}
-
-.slide__2 {
-  left: 50%;
-  translate: -100px 0;
-}
-
-.slide__3 {
-  left: 50%;
-  translate: -150px 0;
-}
-
-.slide__4 {
-  left: 50%;
-  translate: -50% 0;
-}
-
-.slide__1,
-.slide__2,
-.slide__3,
-.slide__4:hover {
-  background-color: transparent;
-  border: 4px solid black;
-} */
-
 .slide {
   width: 580px;
   height: 580px;
+  max-height: 580px;
   display: none;
   position: relative;
 }
 
 .slide.active {
   display: block;
+}
+
+.myCircle {
+  width: 500px;
+  height: 500px;
+  border: 1px solid black;
+  border-radius: 115% 140% 135% 110%/125% 145% 110% 125%;
+  z-index: 100;
 }
 
 .slide__imgwrapper {
@@ -328,7 +311,7 @@
 }
 
 .slide__imgwrapper__component {
-  width: 600px;
+  width: 100%;
   height: auto;
   z-index: 1010;
   filter: drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.473));
@@ -358,7 +341,7 @@
 /* - - - - Sea Products - - - - */
 
 #sea-text {
-  top: 20%;
+  transform: translateY(-190%);
 }
 
 /* - - - - honey Products - - - - */
@@ -380,4 +363,89 @@
 
 #cookie-text {
   top: 50%;
+}
+
+/* - - - - Media Queries - - - - */
+
+@media screen and (max-width: 750px) {
+  .circle {
+    width: 210px;
+    height: 210px;
+  }
+  .text {
+    width: 40%;
+    z-index: 6;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+  }
+  .slider {
+    width: 290px;
+    height: 290px;
+  }
+  .slide {
+    width: 290px;
+    height: 290px;
+  }
+
+  .slide__imgwrapper {
+    width: 100%;
+    height: 100%;
+  }
+  .slide__imgwrapper__component {
+    width: 80%;
+  }
+
+  .bar__wrapper {
+    display: none;
+    width: 80%;
+    height: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .dot__wrapper {
+    position: relative;
+    display: none;
+  }
+  .dot {
+    position: relative !important;
+    display: none;
+    left: 0;
+    bottom: 0;
+  }
+  #bar {
+    display: none;
+  }
+
+  #animals-text {
+    width: 30%;
+    transform: translateY(45%);
+  }
+
+  #sea-text {
+    width: 40%;
+    transform: translateY(-140%);
+  }
+
+  #sea__image {
+    transform: translateY(-10%);
+  }
+
+  #honey-text {
+    width: 45%;
+    top: 30%;
+  }
+
+  /* - - - - animal Products - - - - */
+
+  #animals-text {
+  }
+
+  /* - - - - cookie Products - - - - */
+
+  #cookie-text {
+    top: 50%;
+  }
 }

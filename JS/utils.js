@@ -10,10 +10,18 @@ import {
   container,
   dots,
   dotsWrapper,
+  slides,
 } from "./dom.js";
 import { colors, contrastColors } from "./constants.js";
 
 function addAnimation() {
+  imageComponentWrapper.forEach((img, index) => {
+    if (index === 0) {
+      anime(imageAnimation(img).inAnimation);
+    } else {
+      anime(imageAnimation(img).outAnimation);
+    }
+  });
   layerOnTOp.addEventListener("mouseover", () => {
     imageComponentWrapper.forEach((img) => {
       anime({
@@ -65,6 +73,10 @@ function findSlideIndex() {
 function changeSlide(point, slideIndex) {
   const { activeSlide, slides } = findSlideIndex();
 
+  // Out animations
+  const exitAnimationPromise1 = anime(circleAnimation().outAnimation).finished;
+  const exitAnimationPromise2 = anime(imageAnimation().outAnimation).finished;
+
   // Get the next slide in the sequence.
 
   const nextSlide =
@@ -73,7 +85,7 @@ function changeSlide(point, slideIndex) {
   const prevSlide =
     activeSlide === 0 ? slides.length - 1 : (activeSlide - 1) % slides.length;
 
-  anime(exitAnimation(activeSlide)).finished.then(() => {
+  Promise.all([exitAnimationPromise1, exitAnimationPromise2]).then(() => {
     // Remove active class from all slides
     slides.forEach((slide) => {
       slide.classList.remove("active");
@@ -83,18 +95,22 @@ function changeSlide(point, slideIndex) {
         ? slides[nextSlide].classList.add("active")
         : slides[prevSlide].classList.add("active");
 
-      anime(slideAnimation());
+      anime(circleAnimation().inAnimation);
+      anime(imageAnimation().inAnimation);
       changeBackgroundColor();
       changeDotColors();
       changeBarColor();
       changeDotsBorderColor();
+      changeCircleColor();
     } else if (slideIndex) {
       slides[slideIndex].classList.add("active");
-      anime(slideAnimation());
+      anime(circleAnimation().inAnimation);
+      anime(imageAnimation().inAnimation);
       changeDotsBorderColor();
       changeBackgroundColor();
       changeDotColors();
       changeBarColor();
+      changeCircleColor();
     }
   });
 }
@@ -107,29 +123,65 @@ function addTimer(time) {
   return timer;
 }
 
-function slideAnimation() {
-  const animation = {
-    targets: ".slide.active",
+function circleAnimation() {
+  const inAnimation = {
+    targets: circle,
+
+    scale: 1,
+    duration: 400,
+    easing: "easeInQuad",
+  };
+  const outAnimation = {
+    targets: circle,
+
+    scale: 0.8,
+    duration: 400,
+    easing: "easeOutQuad",
+  };
+  return { inAnimation, outAnimation };
+}
+
+function imageAnimation(target) {
+  const inAnimation = {
+    targets: target ? target : ".active .slide__imgwrapper",
     opacity: 1,
     scale: 1,
     duration: 400,
     easing: "easeInQuad",
   };
-
-  return animation;
-}
-
-function exitAnimation() {
-  const animation = {
-    targets: ".slide.active",
-    opacity: 0.6, // Animate opacity from 1 to 0
-    scale: 0.7, // Animate scale down
+  const outAnimation = {
+    targets: target ? target : ".active .slide__imgwrapper",
+    opacity: 0,
+    scale: 0.6,
     duration: 400,
     easing: "easeOutQuad",
   };
-
-  return animation;
+  return { inAnimation, outAnimation };
 }
+
+// function slideAnimation(target) {
+//   const animation = {
+//     targets: target ? target : ".slide.active",
+//     opacity: 1,
+//     scale: 1,
+//     duration: 400,
+//     easing: "easeInQuad",
+//   };
+
+//   return animation;
+// }
+
+// function exitAnimation(target) {
+//   const animation = {
+//     targets: target ? target : ".slide.active",
+//     opacity: 0.6, // Animate opacity from 1 to 0
+//     scale: 0.7, // Animate scale down
+//     duration: 400,
+//     easing: "easeOutQuad",
+//   };
+
+//   return animation;
+// }
 
 function findIndexColor(index, list) {
   return list[index];
@@ -225,13 +277,13 @@ function makeDotsSliderButton(interval) {
   dotsWrapper.forEach((dot, index) => {
     dot.addEventListener("click", () => {
       const { activeSlide } = findSlideIndex();
-      console.log(activeSlide === index);
-      if (activeSlide !== index) {
+
+      if (activeSlide !== index && index !== 0) {
         changeSlide(null, index);
         changeDotColors();
         changeBackgroundColor();
         clearInterval(interval);
-        interval = addTimer(3000);
+        interval = addTimer(6000);
       }
     });
   });
@@ -243,11 +295,52 @@ function changeBarColor() {
   bar.setAttribute("stroke", currentColor);
 }
 
+function animateCircle() {
+  const radiusList = [
+    "120% 130% 125% 110%/130% 135% 110% 120%",
+    "110% 120% 115% 105%/120% 125% 105% 115%",
+    "125% 135% 130% 115%/135% 140% 115% 125%",
+    "115% 125% 120% 110%/125% 130% 110% 120%",
+    "130% 140% 135% 115%/140% 145% 115% 130%",
+  ];
+
+  anime({
+    targets: circle,
+    borderRadius: radiusList,
+    easing: "easeOutInQuad",
+    duration: 4000,
+    keyframes: [
+      { border: radiusList[0] },
+      { border: radiusList[1] },
+      { border: radiusList[2] },
+      { border: radiusList[3] },
+      { border: radiusList[4] },
+    ],
+    direction: "alternate",
+    loop: true,
+  });
+}
+
+function changeCircleColor() {
+  const { activeSlide: index } = findSlideIndex();
+  const currentColor = findIndexColor(index, colors);
+
+  anime({
+    targets: circle,
+    backgroundColor: currentColor,
+    duration: 200,
+    easing: "easeOutInQuad",
+  });
+}
+
+animateCircle();
+
 function init() {
-  let timerInterval = addTimer(3000);
+  let timerInterval = addTimer(6000);
   changeBackgroundColor();
   changeBarColor();
   changeDotsBorderColor();
+  changeCircleColor();
   changeDotColors();
   makeDotsSliderButton(timerInterval);
   addAnimation();
