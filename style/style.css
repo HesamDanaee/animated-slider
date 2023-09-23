@@ -23,27 +23,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   background-color: antiquewhite;
+}
+
+.container::after {
+  content: "";
+  background-color: white;
+  width: 100%;
+  height: 50vh;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
 }
 
 /* - - - - Slider and Slides - - - - */
 
 .slider {
   position: relative;
+  z-index: 1;
 }
 
 /* - - - - Circles - - - - */
-
-/* #circle {
-  width: 500px;
-  border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-  transition: all 0.2s ease-in-out;
-  transition-property: scale stroke-width fill;
-} */
 
 #herbs-circle g path {
   fill: var(--herbs-circle-color);
@@ -194,7 +196,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  transition: backgroundColor 0.1s ease-in-out;
+  transition: scale 0.1s ease-in-out;
 }
 .dot__wrapper {
   width: 20px;
@@ -204,15 +206,18 @@
   z-index: 1000;
   display: grid;
   place-content: center;
-  transition: border 0.1s ease-in-out;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 0;
 }
 
-.dot:hover {
-  background-color: transparent !important;
-}
 .dot__wrapper:hover {
   cursor: pointer;
 }
+/* .dot__wrapper:hover .dot {
+  scale: 0;
+  cursor: pointer;
+} */
 
 #dot__wrapper__1 {
   bottom: -20px;
@@ -250,7 +255,10 @@
   top: 0;
 }
 
-.slide__1,
+/* #mySVg path {
+} */
+
+/* .slide__1,
 .slide__2,
 .slide__3,
 .slide__4 {
@@ -290,7 +298,7 @@
 .slide__4:hover {
   background-color: transparent;
   border: 4px solid black;
-}
+} */
 
 .slide {
   width: 580px;
@@ -347,120 +355,7 @@
 
 /* - - - - Nuts & Dried Fruits - - - - */
 
-#almonds {
-  top: 0;
-  left: 50%;
-  translate: -50% 0;
-  width: 200px;
-}
-
-#cashew {
-  top: 10%;
-  left: 0;
-}
-
-#date {
-  top: 50%;
-  left: 0;
-  translate: -20% -50%;
-}
-
-#peachleaf {
-  left: 0;
-  bottom: 10%;
-  translate: 0 -50%;
-}
-
-#hazelnut {
-  left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-}
-
-#pistachio {
-  left: 50%;
-  bottom: 0;
-  translate: -50% 20%;
-}
-
-#raisins {
-  right: 0;
-  top: 50%;
-  translate: 0 -50%;
-}
-
-#walnut {
-  bottom: 20%;
-  right: 0;
-}
-
-#fig {
-  top: 20%;
-  right: 0;
-}
-
 /* - - - - Sea Products - - - - */
-
-#big-fish {
-  top: 40%;
-  left: 35%;
-  translate: -50% 0;
-}
-#big-water {
-  top: 35%;
-  left: 50%;
-  translate: -50% -50%;
-}
-
-#bubble-left {
-  left: 13%;
-  bottom: 50%;
-}
-#bubble-middle {
-  right: 40%;
-  bottom: 40%;
-  translate: -50% -50%;
-}
-
-#bubble-up-left {
-  left: 10%;
-  top: 40%;
-}
-#bubble-up-right {
-  top: 50%;
-  right: 10%;
-}
-#bubble-up {
-  left: 50%;
-  top: 40%;
-  translate: -50% -50%;
-}
-#caviar {
-  left: 50%;
-  bottom: 0;
-  translate: -50% 0;
-}
-#fish-2 {
-  right: 15%;
-  top: 40%;
-}
-#fish-3 {
-  right: 5%;
-  bottom: 35%;
-}
-#fish-4 {
-  left: 0;
-  bottom: 35%;
-}
-#water-left {
-  left: 35%;
-  bottom: 35%;
-  translate: -50% -50%;
-}
-#water-up-right {
-  right: 25%;
-  top: 50%;
-}
 
 #sea-text {
   top: 20%;
@@ -468,28 +363,12 @@
 
 /* - - - - honey Products - - - - */
 
-#hive {
-  left: 0;
-  bottom: 10%;
-  translate: -10% 0;
-}
-
-#bee {
-  right: 10%;
-  top: 5%;
-}
-
 #honey-text {
   width: 75%;
   top: 30%;
 }
 
 /* - - - - animal Products - - - - */
-
-#sheep {
-  right: 20%;
-  bottom: 10%;
-}
 
 #animals-text {
   width: 35%;
@@ -500,5 +379,5 @@
 /* - - - - cookie Products - - - - */
 
 #cookie-text {
-  top: 40%;
+  top: 50%;
 }

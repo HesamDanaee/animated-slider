@@ -1,4 +1,4 @@
-import anime from "animejs/lib/anime.es.js";
+import anime from "../node_modules/animejs/lib/anime.es.js";
 
 import {
   bar,
@@ -79,28 +79,19 @@ function changeSlide(point, slideIndex) {
       slide.classList.remove("active");
     });
     if (point) {
-      // anime(exitAnimation());
-      // Add the `active` class to the next or prev slide.
-
       point === "next"
         ? slides[nextSlide].classList.add("active")
         : slides[prevSlide].classList.add("active");
-      // Remove the `active` class from all other slides.
-      anime(slideAnimation(slideIndex));
+
+      anime(slideAnimation());
       changeBackgroundColor();
       changeDotColors();
       changeBarColor();
+      changeDotsBorderColor();
     } else if (slideIndex) {
-      // anime(exitAnimation());
-
       slides[slideIndex].classList.add("active");
-      anime(slideAnimation(slideIndex));
-      // Remove the `active` class from all other slides.
-      // slides
-      //   .filter((slide, index) => index !== slideIndex)
-      //   .forEach((slide) => {
-      //     slide.classList.remove("active");
-      //   });
+      anime(slideAnimation());
+      changeDotsBorderColor();
       changeBackgroundColor();
       changeDotColors();
       changeBarColor();
@@ -108,47 +99,18 @@ function changeSlide(point, slideIndex) {
   });
 }
 
-function scaleSlide(slide) {
-  // Create an animejs animation object.
-  const animation = anime({
-    targets: slide,
-    scaleX: 0.9,
-    scaleY: 0.9,
-    duration: 500,
-    easing: "easeInOutSine",
-  });
-
-  // Play the animation.
-  animation.play();
-
-  // Wait for the animation to finish.
-  animation.finished.then(() => {
-    // Create an animejs animation object.
-    const animation = anime({
-      targets: slide,
-      scaleX: 1,
-      scaleY: 1,
-      duration: 500,
-      easing: "easeInOutSine",
-    });
-
-    // Play the animation.
-    animation.play();
-  });
-}
-
 function addTimer(time) {
   const timer = setInterval(() => {
-    changeSlide("next");
+    changeSlide("next", null);
   }, time);
 
   return timer;
 }
 
-function slideAnimation(target) {
+function slideAnimation() {
   const animation = {
     targets: ".slide.active",
-    opacity: 1, // Animate opacity from 0 to 1
+    opacity: 1,
     scale: 1,
     duration: 400,
     easing: "easeInQuad",
@@ -157,11 +119,11 @@ function slideAnimation(target) {
   return animation;
 }
 
-function exitAnimation(target) {
+function exitAnimation() {
   const animation = {
     targets: ".slide.active",
-    opacity: 0, // Animate opacity from 1 to 0
-    scale: 0.6, // Animate scale down
+    opacity: 0.6, // Animate opacity from 1 to 0
+    scale: 0.7, // Animate scale down
     duration: 400,
     easing: "easeOutQuad",
   };
@@ -189,17 +151,26 @@ function changeDotColors() {
   const { activeSlide: index } = findSlideIndex();
   const currentColor = findIndexColor(index, colors);
 
-  dotsWrapper.forEach((wrapper) => {
+  dotsWrapper.forEach((wrapper, index) => {
+    let borderInAnimation, dotInAnimation;
     wrapper.addEventListener("mouseover", () => {
-      anime({
+      borderInAnimation = anime({
         targets: wrapper,
-        borderColor: currentColor,
         borderWidth: "5px",
+        borderColor: currentColor,
         duration: 100,
-        easing: "easeOutQuad",
+        easing: "easeInQuad",
+      });
+      dotInAnimation = anime({
+        targets: dots[index],
+        scale: 0,
+        duration: 100,
+        easing: "easeInQuad",
       });
     });
     wrapper.addEventListener("mouseout", () => {
+      borderInAnimation.remove(wrapper);
+      dotInAnimation.remove(dots[index]);
       anime({
         targets: wrapper,
         borderColor: currentColor,
@@ -207,32 +178,32 @@ function changeDotColors() {
         duration: 100,
         easing: "easeOutQuad",
       });
+      anime({
+        targets: dots[index],
+        scale: 1,
+        duration: 100,
+        easing: "easeOutQuad",
+      });
     });
   });
 
   dots.forEach((dot) => {
-    // dot.addEventListener("mouseover", () => {
-    //   anime({
-    //     targets: dot,
-    //     backgroundColor: "rgba(0, 0, 0, 0)", // Transparent background color on hover
-    //     borderColor: "#000", // Border color on hover
-    //     borderWidth: "5px", // Border width on hover
-    //     duration: 100,
-    //     easing: "easeOutQuad",
-    //   });
-    // });
-    // dot.addEventListener("mouseout", () => {
-    //   anime({
-    //     targets: dot,
-    //     backgroundColor: currentColor,
-    //     duration: 300,
-    //     easing: "easeOutQuad",
-    //   });
-    // });
-
     anime({
       targets: dot,
       backgroundColor: currentColor,
+      duration: 500,
+      easing: "easeOutQuad",
+    });
+  });
+}
+
+function changeDotsBorderColor() {
+  const { activeSlide: index } = findSlideIndex();
+  const currentColor = findIndexColor(index, colors);
+  dotsWrapper.forEach((wrapper) => {
+    anime({
+      targets: wrapper,
+      borderColor: currentColor,
       duration: 500,
       easing: "easeOutQuad",
     });
@@ -251,13 +222,17 @@ function changeTheDotBorderSize() {
 }
 
 function makeDotsSliderButton(interval) {
-  dots.forEach((dot, index) => {
+  dotsWrapper.forEach((dot, index) => {
     dot.addEventListener("click", () => {
-      changeSlide(null, index);
-      changeDotColors();
-      changeBackgroundColor();
-      clearInterval(interval);
-      interval = addTimer(2000);
+      const { activeSlide } = findSlideIndex();
+      console.log(activeSlide === index);
+      if (activeSlide !== index) {
+        changeSlide(null, index);
+        changeDotColors();
+        changeBackgroundColor();
+        clearInterval(interval);
+        interval = addTimer(3000);
+      }
     });
   });
 }
@@ -268,5 +243,14 @@ function changeBarColor() {
   bar.setAttribute("stroke", currentColor);
 }
 
-changeBarColor();
-export { changeSlide, addTimer, addAnimation, makeDotsSliderButton };
+function init() {
+  let timerInterval = addTimer(3000);
+  changeBackgroundColor();
+  changeBarColor();
+  changeDotsBorderColor();
+  changeDotColors();
+  makeDotsSliderButton(timerInterval);
+  addAnimation();
+}
+
+export { changeSlide, addTimer, addAnimation, makeDotsSliderButton, init };
