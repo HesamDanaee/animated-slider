@@ -9,6 +9,8 @@ const container = document.querySelector(".container");
 const dots = document.querySelectorAll(".dot");
 const dotsWrapper = document.querySelectorAll(".dot__wrapper");
 const slides = document.querySelectorAll(".slide");
+const texts = document.querySelectorAll(".text");
+const bigCircle = document.querySelector("#big-circle");
 
 const imageComponentWrapper = document.querySelectorAll(".slide__imgwrapper");
 export {
@@ -22,4 +24,6 @@ export {
   dots,
   dotsWrapper,
   slides,
+  texts,
+  bigCircle,
 };

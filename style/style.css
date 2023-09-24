@@ -71,8 +71,8 @@
 }
 
 .circle {
-  width: 500px;
-  height: 500px;
+  width: 520px;
+  height: 520px;
   border-radius: 50%;
   position: absolute;
   left: 50%;
@@ -81,19 +81,21 @@
 }
 
 #circle-left,
-#circle-right {
+#circle-middle {
+  position: fixed;
+  translate: 0 0;
   width: 80px;
   height: 80px;
 }
 
 #circle-left {
-  left: 15%;
+  left: 50px;
   top: 25%;
 }
 
-#circle-right {
+#circle-middle {
   right: 0;
-  top: 10%;
+  top: 20px;
 }
 
 .text {
@@ -125,71 +127,15 @@
   transition-property: scale stroke-width fill;
 }
 
-/* #slide__imgwrapper_component_1 {
-  left: 0;
-  bottom: 10%;
-}
-
-#slide__imgwrapper_component_2 {
-  left: 0;
-  bottom: 35%;
-}
-
-#slide__imgwrapper_component_3 {
-  left: 0;
-  top: 10%;
-}
-
-#slide__imgwrapper_component_4 {
-  top: -5%;
-  left: 18%;
-}
-
-#slide__imgwrapper_component_5 {
-  right: 18%;
-}
-
-#slide__imgwrapper_component_6 {
-  top: 24%;
-  right: 0;
-}
-
-#slide__imgwrapper_component_7 {
-  right: 15%;
-  top: 50%;
-  translate: -50% -50%;
-}
-
-#slide__imgwrapper_component_8 {
-  right: 0;
-  bottom: 15%;
-}
-
-#slide__imgwrapper_component_9 {
-  left: 50%;
-  bottom: 0;
-  translate: -50% 0;
-}
-
-#slide__imgwrapper_component_10 {
-  right: 50%;
-  translate: 50% 50%;
-}
-
-#slide__imgwrapper_component_11 {
-  left: 15%;
-  top: 50%;
-  translate: 50% -50%;
-} */
-
 .bar__wrapper {
-  width: 580px;
-  height: 580px;
+  width: 680px;
+  height: 620px;
   position: absolute;
+  left: 10%;
 }
 
 #bar {
-  width: 110%;
+  width: 100%;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -239,31 +185,30 @@
 } */
 
 #dot__wrapper__1 {
-  bottom: -20px;
-  left: 114px;
+  bottom: 14px;
+  left: 68px;
 }
 #dot__wrapper__2 {
-  bottom: -74px;
-  left: 290px;
+  bottom: -36px;
+  left: 210px;
 }
 #dot__wrapper__3 {
-  bottom: -23px;
-  left: 455px;
+  bottom: -28px;
+  left: 332px;
 }
 #dot__wrapper__4 {
-  bottom: 86px;
-  left: 564px;
+  bottom: 4px;
+  left: 406px;
 }
 
 #dot__wrapper__5 {
-  bottom: 261px;
-  left: 608px;
+  bottom: 107px;
+  left: 502px;
 }
 
 #dot__wrapper__6 {
-  bottom: -30px;
-  left: 80%;
-  display: none;
+  bottom: 265px;
+  left: 542px;
 }
 
 .slider__slide__bar__container {
@@ -283,7 +228,9 @@
 }
 
 .slide.active {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .myCircle {
@@ -295,14 +242,12 @@
 }
 
 .slide__imgwrapper {
-  width: 100%;
-  height: 100%;
+  width: 560px;
+  height: 560px;
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  left: 0;
-  top: 0;
   z-index: 5;
 }
 
@@ -315,10 +260,6 @@
   height: auto;
   z-index: 1010;
   filter: drop-shadow(2px 1px 2px rgba(0, 0, 0, 0.473));
-}
-
-#sea__image {
-  align-self: flex-end;
 }
 
 .layerOnTop {
@@ -336,12 +277,28 @@
   cursor: pointer;
 }
 
+/* - - - - Herbs & Spices - - - - */
+#herbs-text {
+  width: 32%;
+  transform: translateY(10%);
+}
+
 /* - - - - Nuts & Dried Fruits - - - - */
+#nuts-text {
+  width: 60%;
+  transform: translateY(-15%);
+}
 
 /* - - - - Sea Products - - - - */
 
 #sea-text {
-  transform: translateY(-190%);
+  width: 50%;
+  transform: translateY(-140%);
+}
+
+#sea__image {
+  align-self: flex-end;
+  width: 90%;
 }
 
 /* - - - - honey Products - - - - */
@@ -349,31 +306,49 @@
 #honey-text {
   width: 75%;
   top: 30%;
+  transform: translateX(-5%);
+}
+
+#honey-image {
+  transform: translateX(-20px);
 }
 
 /* - - - - animal Products - - - - */
 
 #animals-text {
   width: 35%;
-  top: 25%;
-  left: 48%;
+  translate: -60% -180px;
 }
 
 /* - - - - cookie Products - - - - */
 
 #cookie-text {
-  top: 50%;
+  width: 45%;
+  top: 47%;
 }
 
 /* - - - - Media Queries - - - - */
 
 @media screen and (max-width: 750px) {
+  .container {
+    height: 85vh;
+  }
+  .container::after {
+    content: "";
+    background-color: white;
+    width: 100%;
+    height: 43vh;
+    position: absolute;
+    left: 0;
+    bottom: -1%;
+    z-index: 0;
+  }
   .circle {
     width: 210px;
     height: 210px;
   }
   .text {
-    width: 40%;
+    width: 30%;
     z-index: 6;
     position: absolute;
     left: 50%;
@@ -398,54 +373,83 @@
   }
 
   .bar__wrapper {
-    display: none;
-    width: 80%;
-    height: 5px;
+    width: 250px;
+    height: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    top: 300px;
+    left: 50%;
+    translate: -50% 0;
   }
   .dot__wrapper {
-    position: relative;
-    display: none;
+    position: static;
   }
+
   .dot {
-    position: relative !important;
-    display: none;
-    left: 0;
-    bottom: 0;
+    width: 8px;
+    height: 8px;
   }
+
   #bar {
     display: none;
   }
 
-  #animals-text {
-    width: 30%;
-    transform: translateY(45%);
+  /* - - - - Herbs & Spices - - - - */
+
+  #herbs-text {
+    width: 26%;
+    transform: translateY(10%);
   }
 
+  /* - - - - Animal Products - - - - */
+
+  #animals-text {
+    width: 29%;
+    transform: translateY(260%);
+  }
+
+  /* - - - - Nuts Products - - - - */
+
+  #nuts-text {
+    width: 45%;
+  }
+
+  /* - - - - Sea Products - - - - */
+
   #sea-text {
-    width: 40%;
+    width: 35%;
     transform: translateY(-140%);
   }
 
   #sea__image {
-    transform: translateY(-10%);
+    width: 70%;
+    transform: translateY(-25%);
   }
+
+  /* - - - - Honey Products - - - - */
 
   #honey-text {
     width: 45%;
     top: 30%;
   }
 
-  /* - - - - animal Products - - - - */
-
-  #animals-text {
-  }
-
-  /* - - - - cookie Products - - - - */
+  /* - - - - Cookie Products - - - - */
 
   #cookie-text {
+    width: 35%;
     top: 50%;
+  }
+
+  #circle-left,
+  #circle-middle {
+    width: 40px;
+    height: 40px;
+    display: none;
+  }
+
+  #circle-left {
+    left: 15%;
+    top: 35%;
   }
 }
