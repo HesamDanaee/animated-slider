@@ -2,19 +2,23 @@ import anime from "../node_modules/animejs/lib/anime.es.js";
 
 import {
   bar,
-  barPath,
   circle,
-  imageComponent,
   imageComponentWrapper,
   layerOnTOp,
   container,
   dots,
   dotsWrapper,
-  slides,
   texts,
   bigCircle,
+  thumbContainer,
+  thumb,
 } from "./dom.js";
-import { colors, contrastColors } from "./constants.js";
+import {
+  colors,
+  contrastColors,
+  dynamicCircleValuesDesktop,
+  dynamicCircleValuesMobile,
+} from "./constants.js";
 
 function addAnimation() {
   imageComponentWrapper.forEach((img, index) => {
@@ -36,16 +40,16 @@ function addAnimation() {
     imageComponentWrapper.forEach((img) => {
       anime({
         targets: img,
-        scaleX: 0.95, // Scale down to 50% of its original width
-        scaleY: 0.95, // Scale down to 50% of its original height
+        scaleX: 0.95, // Scale down to 0.95% of its original width
+        scaleY: 0.95, // Scale down to 0.95% of its original height
         duration: 200, // Animation duration in milliseconds
         easing: "easeOutQuad", // Easing function for the animation
       });
     });
     anime({
       targets: bigCircle,
-      scaleX: 0.9, // Scale down to 50% of its original width
-      scaleY: 0.9, // Scale down to 50% of its original height
+      scaleX: 0.9, // Scale down to 0.9% of its original width
+      scaleY: 0.9, // Scale down to 0.9% of its original height
       duration: 200, // Animation duration in milliseconds
       easing: "easeOutQuad", // Easing function for the animation
     });
@@ -54,16 +58,16 @@ function addAnimation() {
   layerOnTOp.addEventListener("mouseout", () => {
     anime({
       targets: bigCircle,
-      scaleX: 1, // Scale down to 50% of its original width
-      scaleY: 1, // Scale down to 50% of its original height
+      scaleX: 1, // Scale down to 100% of its original width
+      scaleY: 1, // Scale down to 100% of its original height
       duration: 200, // Animation duration in milliseconds
       easing: "easeOutQuad", // Easing function for the animation
     });
     imageComponentWrapper.forEach((img) => {
       anime({
         targets: img,
-        scaleX: 1, // Scale down to 50% of its original width
-        scaleY: 1, // Scale down to 50% of its original height
+        scaleX: 1, // Scale down to 100% of its original width
+        scaleY: 1, // Scale down to 100% of its original height
         duration: 200, // Animation duration in milliseconds
         easing: "easeOutQuad", // Easing function for the animation
       });
@@ -119,11 +123,21 @@ function changeSlide(point, slideIndex) {
       changeDotsBorderColor();
       changeCircleColor();
       addBorderToActiveDots();
+      dynamicCircle(
+        nextSlide,
+        dynamicCircleValuesDesktop,
+        dynamicCircleValuesMobile
+      );
     } else if (slideIndex || slideIndex === 0) {
       slides[slideIndex].classList.add("active");
       anime(circleAnimation().inAnimation);
       anime(imageAnimation().inAnimation);
       anime(textAnimation().inAnimation);
+      dynamicCircle(
+        slideIndex,
+        dynamicCircleValuesDesktop,
+        dynamicCircleValuesMobile
+      );
       changeDotsBorderColor();
       changeBackgroundColor();
       changeDotColors();
@@ -321,7 +335,7 @@ function makeDotsSliderButton(interval) {
         changeBackgroundColor();
         clearInterval(interval);
 
-        interval = addTimer(6000);
+        // interval = addTimer(6000);
       }
     });
   });
@@ -333,29 +347,59 @@ function changeBarColor() {
   bar.setAttribute("stroke", currentColor);
 }
 
-function animateCircle() {
+function animateCircle(circle) {
   const radiusList = [
     "120% 130% 125% 110%/130% 135% 110% 120%",
     "110% 120% 115% 105%/120% 125% 105% 115%",
-    "125% 135% 130% 115%/135% 140% 115% 125%",
+    "125% 175% 160% 195%/155% 170% 185% 125%",
     "115% 125% 120% 110%/125% 130% 110% 120%",
-    "130% 140% 135% 115%/140% 145% 115% 130%",
+    "130% 160% 125% 165%/140% 145% 115% 130%",
   ];
 
   anime({
     targets: circle,
     borderRadius: radiusList,
-    easing: "easeOutInQuad",
+    easing: "easeInOutQuad",
     duration: 4000,
     keyframes: [
-      { border: radiusList[0] },
-      { border: radiusList[1] },
-      { border: radiusList[2] },
-      { border: radiusList[3] },
-      { border: radiusList[4] },
+      { borderRadius: radiusList[0] },
+      { borderRadius: radiusList[1] },
+      { borderRadius: radiusList[2] },
+      { borderRadius: radiusList[3] },
+      { borderRadius: radiusList[4] },
     ],
     direction: "alternate",
     loop: true,
+  });
+}
+
+function dynamicCircle(index, desktopValues, mobileValues) {
+  const { activeSlide: index2 } = findSlideIndex();
+  const currentColor = findIndexColor(index2, colors);
+  let isMobile = window.innerWidth < 780;
+
+  if (isMobile) {
+    anime({
+      targets: thumbContainer,
+      duration: 3000,
+      translateX: `${mobileValues[index2].left}%`,
+      easing: "easeInOutCubic",
+    });
+  } else {
+    anime({
+      targets: thumbContainer,
+      height: desktopValues[index].height,
+      duration: 3000,
+      rotate: desktopValues[index].rotate,
+      easing: "easeInOutCubic",
+    });
+  }
+  anime({
+    targets: thumb,
+    borderColor: currentColor,
+    duration: 200,
+    rotate: mobileValues[index].rotate,
+    easing: "easeOutInQuad",
   });
 }
 
@@ -380,7 +424,9 @@ function init() {
   changeDotColors();
   makeDotsSliderButton(timerInterval);
   addAnimation();
-  animateCircle();
+  animateCircle(circle);
+  dynamicCircle(0, dynamicCircleValuesDesktop, dynamicCircleValuesMobile);
+  animateCircle(thumb);
   addBorderToActiveDots();
 }
 

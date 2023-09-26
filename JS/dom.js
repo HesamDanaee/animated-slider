@@ -11,7 +11,8 @@ const dotsWrapper = document.querySelectorAll(".dot__wrapper");
 const slides = document.querySelectorAll(".slide");
 const texts = document.querySelectorAll(".text");
 const bigCircle = document.querySelector("#big-circle");
-
+const thumbContainer = document.querySelector(".thumb-container");
+const thumb = document.querySelector(".thumb");
 const imageComponentWrapper = document.querySelectorAll(".slide__imgwrapper");
 export {
   bar,
@@ -26,4 +27,6 @@ export {
   slides,
   texts,
   bigCircle,
+  thumbContainer,
+  thumb,
 };

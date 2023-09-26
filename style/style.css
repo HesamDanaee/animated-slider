@@ -25,13 +25,14 @@
   align-items: center;
   position: relative;
   background-color: antiquewhite;
+  overflow: hidden;
 }
 
 .container::after {
   content: "";
   background-color: white;
   width: 100%;
-  height: 50vh;
+  height: 35vh;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -73,7 +74,7 @@
 .circle {
   width: 520px;
   height: 520px;
-  border-radius: 50%;
+  border-radius: 120% 130% 125% 110%/130% 135% 110% 120%;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -81,21 +82,29 @@
 }
 
 #circle-left,
-#circle-middle {
+#circle-middle,
+#circle-right {
   position: fixed;
-  translate: 0 0;
-  width: 80px;
-  height: 80px;
+  left: 50%;
+  top: 50%;
 }
 
 #circle-left {
-  left: 50px;
-  top: 25%;
+  width: 80px;
+  height: 80px;
+  translate: -150% -400px;
 }
 
 #circle-middle {
-  right: 0;
-  top: 20px;
+  width: 100px;
+  height: 100px;
+  translate: -400px -140%;
+}
+
+#circle-right {
+  width: 60px;
+  height: 60px;
+  translate: 350px -140%;
 }
 
 .text {
@@ -140,7 +149,27 @@
   left: 0;
   bottom: 0;
   translate: -3% 10%;
-  z-index: 0;
+}
+
+/* - - - - Thumb Container - - - - */
+
+.thumb-container {
+  width: 640px;
+  height: 640px;
+  top: 10px;
+  position: absolute;
+  transform: rotate(-2deg);
+  transform-origin: middle top;
+}
+
+.thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid black;
+  position: absolute;
+  left: 24%;
+  bottom: 12%;
+  border-radius: 120% 130% 125% 110%/130% 135% 110% 120%;
 }
 
 .dot__parent {
@@ -153,7 +182,6 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  z-index: 2000;
 }
 
 .dot {
@@ -179,36 +207,32 @@
 .dot__wrapper:hover {
   cursor: pointer;
 }
-/* .dot__wrapper:hover .dot {
-  scale: 0;
-  cursor: pointer;
-} */
 
 #dot__wrapper__1 {
-  bottom: 14px;
-  left: 68px;
+  bottom: 22px;
+  left: 72px;
 }
 #dot__wrapper__2 {
-  bottom: -36px;
-  left: 210px;
+  bottom: -31px;
+  left: 191px;
 }
 #dot__wrapper__3 {
   bottom: -28px;
-  left: 332px;
+  left: 324px;
 }
 #dot__wrapper__4 {
-  bottom: 4px;
-  left: 406px;
+  bottom: 30px;
+  left: 436px;
 }
 
 #dot__wrapper__5 {
-  bottom: 107px;
-  left: 502px;
+  bottom: 129px;
+  left: 511px;
 }
 
 #dot__wrapper__6 {
   bottom: 265px;
-  left: 542px;
+  left: 538px;
 }
 
 .slider__slide__bar__container {
@@ -451,5 +475,20 @@
   #circle-left {
     left: 15%;
     top: 35%;
+  }
+
+  .thumb-container {
+    transform: none;
+    transform-origin: middle center;
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    translate: 0 290px;
+  }
+
+  .thumb {
+    left: 7%;
   }
 }
